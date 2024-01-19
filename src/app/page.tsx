@@ -9,7 +9,6 @@ export default async function Home() {
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" }
   })
-  console.log("Helloo");
   
   return (
     <div>

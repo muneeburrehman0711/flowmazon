@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 
 export async function incrementProductQuantity(productId: string) {
+    
     const cart = (await getCart()) ?? (await createCart());
     
     const articleInCart = cart.items.find((item) => item.productId === productId);
