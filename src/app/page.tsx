@@ -21,7 +21,7 @@ export default async function Home({searchParams : {page = "1"}}:HomeProps) {
 
    const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
-    skip:(currentPage - 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
+    skip:(currentPage + 1) * pageSize + (currentPage === 1 ? 0 : heroItemCount),
     take : pageSize + (currentPage === 1 ? heroItemCount : 0),
   });
   

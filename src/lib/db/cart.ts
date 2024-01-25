@@ -100,14 +100,25 @@ await prisma.$transaction(async tx =>{
             where:{cartId: userCart.id}
 
         })
-        await tx.cartItem.createMany({
-            data: mergedCartItems.map(item => ({
-                cartId:userCart.id,
-                productId:item.productId,
-                quantity:item.quantity
+        await tx.cart.update ({
+            where:{id:userCart.id },
+            data:{
+                items:{
+                    createMany:{
+                        data: mergedCartItems.map(item => ({
+                            
+                            productId:item.productId,
+                            quantity:item.quantity
+            
+                        })),
+                         
+                    },
+                },
+            },
+        });
 
-            }))
-        })
+
+       
 
     }else{
         await tx.cart.create({
@@ -128,7 +139,7 @@ await prisma.$transaction(async tx =>{
     await tx.cart.delete({
         where:{id:localCart.id}
     });
-    //throw Error("test");
+    // throw Error("test");
     cookies().set("localCartId","");
 
 });
